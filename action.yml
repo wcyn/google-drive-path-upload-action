@@ -1,21 +1,21 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Quill Action'
+description: 'Quill Action for mobile development'
+author: 'wcyn'
 
 # Define your inputs here.
 inputs:
-  who-to-greet:
-    description: 'Your input description here'
+  build-platform:
+    description: "Which build platform to use. Options are: 'flutter'"
     required: true
-    default: 'World'
+    default: 'flutter'
 
 # Define your outputs here.
 outputs:
-  greeting:
-    description: 'Your output description here'
+  emulator-link:
+    description: 'A link to the emulator running the built mobile app'
 
 runs:
   using: docker
   image: Dockerfile
   env:
-    INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+    INPUT_BUILD_PLATFORM: ${{ inputs.build-platform }}

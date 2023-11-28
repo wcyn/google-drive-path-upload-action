@@ -13,14 +13,12 @@ FROM gcr.io/distroless/python3-debian10
 COPY --from=builder /app /app
 WORKDIR /app
 ENV PYTHONPATH /app
-CMD ["/app/src/googledrive.py", "file", "README.md", "1VGr9KkrEj1dqvVa65gwB5R0IQnoPcuaK"]
-
 
 # # Set the working directory inside the container
 # WORKDIR /usr/src
 
 # # Copy any source file(s) required for the action
-# COPY entrypoint.sh .
+COPY entrypoint.sh .
 
 # # Configure the container to be run as an executable
-# ENTRYPOINT ["/usr/src/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]

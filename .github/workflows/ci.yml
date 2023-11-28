@@ -49,7 +49,10 @@ jobs:
           INPUT_WHO_TO_GREET: Mona Lisa Octocat
         run: |
           docker run \
-            --env INPUT_WHO_TO_GREET="${{ env.INPUT_WHO_TO_GREET }}" \
+            --env INPUT_GDRIVE_SA_KEY="${{ env.INPUT_GDRIVE_SA_KEY }}" \
+            --env INPUT_GDRIVE_FOLDER_ID="${{ env.INPUT_GDRIVE_FOLDER_ID }}" \
+            --env INPUT_GDRIVE_FILENAME="${{ env.INPUT_GDRIVE_FILENAME }}" \ # Implement ability for paths
+            --env INPUT_GDRIVE_FILE_OR_FOLDER="${{ env.INPUT_GDRIVE_FILE_OR_FOLDER }}" \
             --rm ${{ env.TEST_TAG }}
 
   test-action:
@@ -65,8 +68,10 @@ jobs:
         id: test-action
         uses: ./
         with:
-          who-to-greet: Mona Lisa Octocat
+          gdrive_sa_key: "***"
+          gdrive_filename: "test.txt"
+          gdrive_folder_id: "testID"
 
       - name: Print Output
         id: output
-        run: echo "${{ steps.test-action.outputs.greeting }}"
+        run: echo "${{ steps.test-action.outputs.gdrive_new_file_id }}"

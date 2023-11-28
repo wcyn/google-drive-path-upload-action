@@ -34,6 +34,9 @@ follow the below instructions:
 After you've cloned the repository to your local machine or codespace, you'll
 need to perform some initial setup steps before you can develop your action.
 
+Note that folders don't have a dowload link, only a link to drive where they can
+be viewed.
+
 > [!NOTE]
 >
 > You'll need to have a reasonably modern version of

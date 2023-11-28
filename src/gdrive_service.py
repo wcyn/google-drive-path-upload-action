@@ -1,16 +1,10 @@
-# from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google.oauth2 import service_account
-from create_folder import create_folder
-from create_file import create_file
-from list_files_and_folders import list_files_and_folders
 
 import json
-import sys
-import os
 
-def get_service(api_name, api_version, scopes, gdrive_creds):
+def get_scoped_service(api_name, api_version, scopes, gdrive_creds):
     """Get a service that communicates to a Google API.
 
     Args:
@@ -33,33 +27,22 @@ def get_service(api_name, api_version, scopes, gdrive_creds):
     return service
 
 
-def main():
-    """Gets args and creates a file or folder to drive
+def get_gdrive_service(gdrive_sa_key):
+    """Creates a file or folder to drive
     """
-    gdrive_sa_key = os.environ["INPUT_GDRIVE-SA-KEY"]
 
-    script, folder_or_file, name, parent_folder_id = sys.argv
-
-    # Define the auth scopes to request.
-    scope = 'https://www.googleapis.com/auth/drive.file'
+    # Define the auth scopes to request. https://developers.google.com/drive/api/guides/api-specific-auth
+    scope = 'https://www.googleapis.com/auth/drive'
 
     try:
         # Authenticate and construct service.
-        service = get_service(
+        service = get_scoped_service(
             api_name='drive',
             api_version='v3',
             scopes=[scope],
             gdrive_creds=gdrive_sa_key)
-
-        # list_files_and_folders(service)
-        if folder_or_file == "folder":
-            new_folder_id = create_folder(service, name, parent_folder_id )
-        elif folder_or_file == "file":
-            new_file_id = create_file(service, name, parent_folder_id)
+        return service
 
     except HttpError as error:
-        # TODO(developer) - Handle errors from drive API.
+        # TODO Handle errors from drive API.
         print(f'An error occurred: {error}')
-
-if __name__ == '__main__':
-    main()

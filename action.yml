@@ -2,23 +2,33 @@ name: 'Quill Action'
 description: 'Quill Action for mobile development'
 author: 'wcyn'
 
-# Define your inputs here.
 inputs:
-  build-platform:
-    description: "Which build platform to use. Options are: 'flutter'"
-    required: true
-    default: 'flutter'
-  gdrive-sa-key:
+  gdrive_sa_key:
     description: "Key to authorize access to Google Drive folder"
     required: true
+  item_path:
+    description: "Path of the file or folder to upload to the Google Drive folder"
+    required: true
+  gdrive_folder_id:
+    description: "The folder id on Google Drive to upload the file or folder to"
+    required: true
+  name:
+    description: "Optional rename of the uploaded file. Will be ignored for folder"
+    required: false
 
-# Define your outputs here.
 outputs:
-  emulator-link:
-    description: 'A link to the emulator running the built mobile app'
+  uploaded_item_id:
+    description: "ID of the newly uploaded file or folder"
+  download_link:
+    description: |
+      "Download link for the newly uploaded file or folder.
+      Note that folders only have a link to view it on Driv but no download link"
 
 runs:
   using: docker
   image: Dockerfile
   env:
-    INPUT_BUILD_PLATFORM: ${{ inputs.build-platform }}
+    INPUT_GDRIVE_SA_KEY: ${{ inputs.gdrive_sa_key }}
+    INPUT_FILE_PATH: ${{ inputs.file_path }}
+    INPUT_GDRIVE_FOLDER_ID: ${{ inputs.gdrive_folder_id }}
+    INPUT_NAME: ${{ inputs.name }}
